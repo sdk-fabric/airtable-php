@@ -1,0 +1,9 @@
+{
+  "type": "client-php",
+  "require": {
+    "sdkfabric/airtable": {
+      "target": "./src",
+      "namespace": "SdkFabric\Airtable"
+    }
+  }
+}
