@@ -3,7 +3,7 @@
   "require": {
     "sdkfabric/airtable": {
       "target": "./src",
-      "namespace": "SdkFabric\Airtable"
+      "namespace": "SdkFabric\\Airtable"
     }
   }
 }
