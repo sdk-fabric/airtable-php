@@ -164,6 +164,48 @@ class RecordsTag extends TagAbstract
     }
 
     /**
+     * Updates up to 10 records, or upserts them when performUpsert is set.
+     *
+     * @param string $baseId
+     * @param string $tableIdOrName
+     * @param BulkUpdateRequest $payload
+     * @return BulkUpdateResponse
+     * @throws ClientException
+     */
+    public function replaceAll(string $baseId, string $tableIdOrName, BulkUpdateRequest $payload): BulkUpdateResponse
+    {
+        $url = $this->parser->url('/v0/:baseId/:tableIdOrName', [
+            'baseId' => $baseId,
+            'tableIdOrName' => $tableIdOrName,
+        ]);
+
+        $options = [
+            'query' => $this->parser->query([
+            ], [
+            ]),
+            'json' => $payload
+        ];
+
+        try {
+            $response = $this->httpClient->request('PUT', $url, $options);
+            $data = (string) $response->getBody();
+
+            return $this->parser->parse($data, BulkUpdateResponse::class);
+        } catch (ClientException $e) {
+            throw $e;
+        } catch (BadResponseException $e) {
+            $data = (string) $e->getResponse()->getBody();
+
+            switch ($e->getResponse()->getStatusCode()) {
+                default:
+                    throw new UnknownStatusCodeException('The server returned an unknown status code');
+            }
+        } catch (\Throwable $e) {
+            throw new ClientException('An unknown error occurred: ' . $e->getMessage());
+        }
+    }
+
+    /**
      * Updates a single record. Table names and table ids can be used interchangeably. We recommend using table IDs so you don't need to modify your API request when your table name changes.
      *
      * @param string $baseId
@@ -193,6 +235,48 @@ class RecordsTag extends TagAbstract
             $data = (string) $response->getBody();
 
             return $this->parser->parse($data, Record::class);
+        } catch (ClientException $e) {
+            throw $e;
+        } catch (BadResponseException $e) {
+            $data = (string) $e->getResponse()->getBody();
+
+            switch ($e->getResponse()->getStatusCode()) {
+                default:
+                    throw new UnknownStatusCodeException('The server returned an unknown status code');
+            }
+        } catch (\Throwable $e) {
+            throw new ClientException('An unknown error occurred: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Updates up to 10 records, or upserts them when performUpsert is set.
+     *
+     * @param string $baseId
+     * @param string $tableIdOrName
+     * @param BulkUpdateRequest $payload
+     * @return BulkUpdateResponse
+     * @throws ClientException
+     */
+    public function updateAll(string $baseId, string $tableIdOrName, BulkUpdateRequest $payload): BulkUpdateResponse
+    {
+        $url = $this->parser->url('/v0/:baseId/:tableIdOrName', [
+            'baseId' => $baseId,
+            'tableIdOrName' => $tableIdOrName,
+        ]);
+
+        $options = [
+            'query' => $this->parser->query([
+            ], [
+            ]),
+            'json' => $payload
+        ];
+
+        try {
+            $response = $this->httpClient->request('PATCH', $url, $options);
+            $data = (string) $response->getBody();
+
+            return $this->parser->parse($data, BulkUpdateResponse::class);
         } catch (ClientException $e) {
             throw $e;
         } catch (BadResponseException $e) {
