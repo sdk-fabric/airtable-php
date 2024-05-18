@@ -16,16 +16,18 @@ the code.
 
 ## Usage
 
-The following example shows how you can use the client:
+The following example shows how you initialize the client:
 
 ```php
 <?php
 
 require __DIR__ . '/vendor/autoload.php';
 
-$credentials = new \Sdkgen\Client\Credentials\HttpBearer('[access_token]');
-$client = new \SdkFabric\SdkFabric\Airtable\Client::build($credentials);
+$client = new \SdkFabric\Airtable\Client::build('[access_token]');
 
 // @TODO use the client
 
 ```
+
+You can find all available operations and types at:
+https://app.typehub.cloud/d/sdkfabric/airtable
