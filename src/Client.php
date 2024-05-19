@@ -32,6 +32,14 @@ class Client extends ClientAbstract
         );
     }
 
+    public function fields(): FieldsTag
+    {
+        return new FieldsTag(
+            $this->httpClient,
+            $this->parser
+        );
+    }
+
 
 
     public static function build(string $token): self
