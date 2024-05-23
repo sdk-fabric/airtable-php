@@ -40,6 +40,14 @@ class Client extends ClientAbstract
         );
     }
 
+    public function table(): TableTag
+    {
+        return new TableTag(
+            $this->httpClient,
+            $this->parser
+        );
+    }
+
 
 
     public static function build(string $token): self
