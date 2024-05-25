@@ -40,9 +40,17 @@ class Client extends ClientAbstract
         );
     }
 
-    public function table(): TableTag
+    public function tables(): TablesTag
     {
-        return new TableTag(
+        return new TablesTag(
+            $this->httpClient,
+            $this->parser
+        );
+    }
+
+    public function comments(): CommentsTag
+    {
+        return new CommentsTag(
             $this->httpClient,
             $this->parser
         );
