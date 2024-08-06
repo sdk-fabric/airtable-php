@@ -18,6 +18,7 @@ class FieldsTag extends TagAbstract
      * @param string $tableId
      * @param Field $payload
      * @return Field
+     * @throws ErrorException
      * @throws ClientException
      */
     public function create(string $baseId, string $tableId, Field $payload): Field
@@ -45,6 +46,14 @@ class FieldsTag extends TagAbstract
             $data = (string) $e->getResponse()->getBody();
 
             switch ($e->getResponse()->getStatusCode()) {
+                case 400:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 403:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 404:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 500:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
                 default:
                     throw new UnknownStatusCodeException('The server returned an unknown status code');
             }
@@ -59,6 +68,7 @@ class FieldsTag extends TagAbstract
      * @param string $columnId
      * @param Field $payload
      * @return Field
+     * @throws ErrorException
      * @throws ClientException
      */
     public function update(string $baseId, string $tableId, string $columnId, Field $payload): Field
@@ -87,6 +97,14 @@ class FieldsTag extends TagAbstract
             $data = (string) $e->getResponse()->getBody();
 
             switch ($e->getResponse()->getStatusCode()) {
+                case 400:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 403:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 404:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 500:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
                 default:
                     throw new UnknownStatusCodeException('The server returned an unknown status code');
             }
