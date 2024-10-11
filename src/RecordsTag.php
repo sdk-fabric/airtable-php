@@ -31,6 +31,7 @@ class RecordsTag extends TagAbstract
      * @param bool|null $returnFieldsByFieldId
      * @param string|null $recordMetadata
      * @return RecordCollection
+     * @throws ErrorException
      * @throws ClientException
      */
     public function getAll(string $baseId, string $tableIdOrName, ?string $timeZone = null, ?string $userLocale = null, ?int $pageSize = null, ?int $maxRecords = null, ?string $offset = null, ?string $view = null, ?string $sort = null, ?string $filterByFormula = null, ?string $cellFormat = null, ?string $fields = null, ?bool $returnFieldsByFieldId = null, ?string $recordMetadata = null): RecordCollection
@@ -69,6 +70,14 @@ class RecordsTag extends TagAbstract
             $data = (string) $e->getResponse()->getBody();
 
             switch ($e->getResponse()->getStatusCode()) {
+                case 400:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 403:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 404:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 500:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
                 default:
                     throw new UnknownStatusCodeException('The server returned an unknown status code');
             }
@@ -84,6 +93,7 @@ class RecordsTag extends TagAbstract
      * @param string $tableIdOrName
      * @param string $recordId
      * @return Record
+     * @throws ErrorException
      * @throws ClientException
      */
     public function get(string $baseId, string $tableIdOrName, string $recordId): Record
@@ -111,6 +121,65 @@ class RecordsTag extends TagAbstract
             $data = (string) $e->getResponse()->getBody();
 
             switch ($e->getResponse()->getStatusCode()) {
+                case 400:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 403:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 404:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 500:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                default:
+                    throw new UnknownStatusCodeException('The server returned an unknown status code');
+            }
+        } catch (\Throwable $e) {
+            throw new ClientException('An unknown error occurred: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Creates multiple records. Note that table names and table ids can be used interchangeably. We recommend using table IDs so you don't need to modify your API request when your table name changes.
+     *
+     * @param string $baseId
+     * @param string $tableIdOrName
+     * @param RecordCollection $payload
+     * @return RecordCollection
+     * @throws ErrorException
+     * @throws ClientException
+     */
+    public function create(string $baseId, string $tableIdOrName, RecordCollection $payload): RecordCollection
+    {
+        $url = $this->parser->url('/v0/:baseId/:tableIdOrName', [
+            'baseId' => $baseId,
+            'tableIdOrName' => $tableIdOrName,
+        ]);
+
+        $options = [
+            'query' => $this->parser->query([
+            ], [
+            ]),
+            'json' => $payload
+        ];
+
+        try {
+            $response = $this->httpClient->request('POST', $url, $options);
+            $data = (string) $response->getBody();
+
+            return $this->parser->parse($data, RecordCollection::class);
+        } catch (ClientException $e) {
+            throw $e;
+        } catch (BadResponseException $e) {
+            $data = (string) $e->getResponse()->getBody();
+
+            switch ($e->getResponse()->getStatusCode()) {
+                case 400:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 403:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 404:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 500:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
                 default:
                     throw new UnknownStatusCodeException('The server returned an unknown status code');
             }
@@ -127,6 +196,7 @@ class RecordsTag extends TagAbstract
      * @param string $recordId
      * @param Record $payload
      * @return Record
+     * @throws ErrorException
      * @throws ClientException
      */
     public function replace(string $baseId, string $tableIdOrName, string $recordId, Record $payload): Record
@@ -155,6 +225,14 @@ class RecordsTag extends TagAbstract
             $data = (string) $e->getResponse()->getBody();
 
             switch ($e->getResponse()->getStatusCode()) {
+                case 400:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 403:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 404:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 500:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
                 default:
                     throw new UnknownStatusCodeException('The server returned an unknown status code');
             }
@@ -170,6 +248,7 @@ class RecordsTag extends TagAbstract
      * @param string $tableIdOrName
      * @param BulkUpdateRequest $payload
      * @return BulkUpdateResponse
+     * @throws ErrorException
      * @throws ClientException
      */
     public function replaceAll(string $baseId, string $tableIdOrName, BulkUpdateRequest $payload): BulkUpdateResponse
@@ -197,6 +276,14 @@ class RecordsTag extends TagAbstract
             $data = (string) $e->getResponse()->getBody();
 
             switch ($e->getResponse()->getStatusCode()) {
+                case 400:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 403:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 404:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 500:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
                 default:
                     throw new UnknownStatusCodeException('The server returned an unknown status code');
             }
@@ -213,6 +300,7 @@ class RecordsTag extends TagAbstract
      * @param string $recordId
      * @param Record $payload
      * @return Record
+     * @throws ErrorException
      * @throws ClientException
      */
     public function update(string $baseId, string $tableIdOrName, string $recordId, Record $payload): Record
@@ -241,6 +329,14 @@ class RecordsTag extends TagAbstract
             $data = (string) $e->getResponse()->getBody();
 
             switch ($e->getResponse()->getStatusCode()) {
+                case 400:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 403:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 404:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 500:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
                 default:
                     throw new UnknownStatusCodeException('The server returned an unknown status code');
             }
@@ -256,6 +352,7 @@ class RecordsTag extends TagAbstract
      * @param string $tableIdOrName
      * @param BulkUpdateRequest $payload
      * @return BulkUpdateResponse
+     * @throws ErrorException
      * @throws ClientException
      */
     public function updateAll(string $baseId, string $tableIdOrName, BulkUpdateRequest $payload): BulkUpdateResponse
@@ -283,6 +380,14 @@ class RecordsTag extends TagAbstract
             $data = (string) $e->getResponse()->getBody();
 
             switch ($e->getResponse()->getStatusCode()) {
+                case 400:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 403:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 404:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 500:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
                 default:
                     throw new UnknownStatusCodeException('The server returned an unknown status code');
             }

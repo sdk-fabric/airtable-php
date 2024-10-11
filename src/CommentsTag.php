@@ -18,6 +18,7 @@ class CommentsTag extends TagAbstract
      * @param string $tableIdOrName
      * @param string $recordId
      * @return CommentCollection
+     * @throws ErrorException
      * @throws ClientException
      */
     public function getAll(string $baseId, string $tableIdOrName, string $recordId): CommentCollection
@@ -45,6 +46,14 @@ class CommentsTag extends TagAbstract
             $data = (string) $e->getResponse()->getBody();
 
             switch ($e->getResponse()->getStatusCode()) {
+                case 400:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 403:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 404:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 500:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
                 default:
                     throw new UnknownStatusCodeException('The server returned an unknown status code');
             }
@@ -59,6 +68,7 @@ class CommentsTag extends TagAbstract
      * @param string $recordId
      * @param Comment $payload
      * @return Comment
+     * @throws ErrorException
      * @throws ClientException
      */
     public function create(string $baseId, string $tableIdOrName, string $recordId, Comment $payload): Comment
@@ -87,6 +97,14 @@ class CommentsTag extends TagAbstract
             $data = (string) $e->getResponse()->getBody();
 
             switch ($e->getResponse()->getStatusCode()) {
+                case 400:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 403:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 404:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 500:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
                 default:
                     throw new UnknownStatusCodeException('The server returned an unknown status code');
             }
@@ -102,6 +120,7 @@ class CommentsTag extends TagAbstract
      * @param string $rowCommentId
      * @param Comment $payload
      * @return Comment
+     * @throws ErrorException
      * @throws ClientException
      */
     public function update(string $baseId, string $tableIdOrName, string $recordId, string $rowCommentId, Comment $payload): Comment
@@ -131,6 +150,14 @@ class CommentsTag extends TagAbstract
             $data = (string) $e->getResponse()->getBody();
 
             switch ($e->getResponse()->getStatusCode()) {
+                case 400:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 403:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 404:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 500:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
                 default:
                     throw new UnknownStatusCodeException('The server returned an unknown status code');
             }
@@ -145,6 +172,7 @@ class CommentsTag extends TagAbstract
      * @param string $recordId
      * @param string $rowCommentId
      * @return CommentDeleteResponse
+     * @throws ErrorException
      * @throws ClientException
      */
     public function delete(string $baseId, string $tableIdOrName, string $recordId, string $rowCommentId): CommentDeleteResponse
@@ -173,6 +201,14 @@ class CommentsTag extends TagAbstract
             $data = (string) $e->getResponse()->getBody();
 
             switch ($e->getResponse()->getStatusCode()) {
+                case 400:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 403:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 404:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
+                case 500:
+                    throw new ErrorException($this->parser->parse($data, Error::class));
                 default:
                     throw new UnknownStatusCodeException('The server returned an unknown status code');
             }
