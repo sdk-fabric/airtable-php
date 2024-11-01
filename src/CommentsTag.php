@@ -8,12 +8,15 @@ namespace SdkFabric\Airtable;
 
 use GuzzleHttp\Exception\BadResponseException;
 use Sdkgen\Client\Exception\ClientException;
+use Sdkgen\Client\Exception\Payload;
 use Sdkgen\Client\Exception\UnknownStatusCodeException;
 use Sdkgen\Client\TagAbstract;
 
 class CommentsTag extends TagAbstract
 {
     /**
+     * Returns a list of comments for the record from newest to oldest.
+     *
      * @param string $baseId
      * @param string $tableIdOrName
      * @param string $recordId
@@ -30,6 +33,8 @@ class CommentsTag extends TagAbstract
         ]);
 
         $options = [
+            'headers' => [
+            ],
             'query' => $this->parser->query([
             ], [
             ]),
@@ -37,32 +42,50 @@ class CommentsTag extends TagAbstract
 
         try {
             $response = $this->httpClient->request('GET', $url, $options);
-            $data = (string) $response->getBody();
+            $body = $response->getBody();
 
-            return $this->parser->parse($data, CommentCollection::class);
+            $data = $this->parser->parse((string) $body, CommentCollection::class);
+
+            return $data;
         } catch (ClientException $e) {
             throw $e;
         } catch (BadResponseException $e) {
-            $data = (string) $e->getResponse()->getBody();
+            $body = $e->getResponse()->getBody();
+            $statusCode = $e->getResponse()->getStatusCode();
 
-            switch ($e->getResponse()->getStatusCode()) {
-                case 400:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 403:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 404:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 500:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                default:
-                    throw new UnknownStatusCodeException('The server returned an unknown status code');
+            if ($statusCode === 400) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
             }
+
+            if ($statusCode === 403) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            if ($statusCode === 404) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            if ($statusCode === 500) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            throw new UnknownStatusCodeException('The server returned an unknown status code: ' . $statusCode);
         } catch (\Throwable $e) {
             throw new ClientException('An unknown error occurred: ' . $e->getMessage());
         }
     }
 
     /**
+     * Creates a comment on a record. User mentioned is supported.
+     *
      * @param string $baseId
      * @param string $tableIdOrName
      * @param string $recordId
@@ -80,40 +103,61 @@ class CommentsTag extends TagAbstract
         ]);
 
         $options = [
+            'headers' => [
+                'Content-Type' => 'application/json',
+            ],
             'query' => $this->parser->query([
             ], [
             ]),
-            'json' => $payload
+            'json' => $payload,
         ];
 
         try {
             $response = $this->httpClient->request('POST', $url, $options);
-            $data = (string) $response->getBody();
+            $body = $response->getBody();
 
-            return $this->parser->parse($data, Comment::class);
+            $data = $this->parser->parse((string) $body, Comment::class);
+
+            return $data;
         } catch (ClientException $e) {
             throw $e;
         } catch (BadResponseException $e) {
-            $data = (string) $e->getResponse()->getBody();
+            $body = $e->getResponse()->getBody();
+            $statusCode = $e->getResponse()->getStatusCode();
 
-            switch ($e->getResponse()->getStatusCode()) {
-                case 400:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 403:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 404:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 500:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                default:
-                    throw new UnknownStatusCodeException('The server returned an unknown status code');
+            if ($statusCode === 400) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
             }
+
+            if ($statusCode === 403) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            if ($statusCode === 404) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            if ($statusCode === 500) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            throw new UnknownStatusCodeException('The server returned an unknown status code: ' . $statusCode);
         } catch (\Throwable $e) {
             throw new ClientException('An unknown error occurred: ' . $e->getMessage());
         }
     }
 
     /**
+     * Updates a comment on a record. API users can only update comments they have created. User mentioned is supported.
+     *
      * @param string $baseId
      * @param string $tableIdOrName
      * @param string $recordId
@@ -133,49 +177,70 @@ class CommentsTag extends TagAbstract
         ]);
 
         $options = [
+            'headers' => [
+                'Content-Type' => 'application/json',
+            ],
             'query' => $this->parser->query([
             ], [
             ]),
-            'json' => $payload
+            'json' => $payload,
         ];
 
         try {
             $response = $this->httpClient->request('PATCH', $url, $options);
-            $data = (string) $response->getBody();
+            $body = $response->getBody();
 
-            return $this->parser->parse($data, Comment::class);
+            $data = $this->parser->parse((string) $body, Comment::class);
+
+            return $data;
         } catch (ClientException $e) {
             throw $e;
         } catch (BadResponseException $e) {
-            $data = (string) $e->getResponse()->getBody();
+            $body = $e->getResponse()->getBody();
+            $statusCode = $e->getResponse()->getStatusCode();
 
-            switch ($e->getResponse()->getStatusCode()) {
-                case 400:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 403:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 404:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 500:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                default:
-                    throw new UnknownStatusCodeException('The server returned an unknown status code');
+            if ($statusCode === 400) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
             }
+
+            if ($statusCode === 403) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            if ($statusCode === 404) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            if ($statusCode === 500) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            throw new UnknownStatusCodeException('The server returned an unknown status code: ' . $statusCode);
         } catch (\Throwable $e) {
             throw new ClientException('An unknown error occurred: ' . $e->getMessage());
         }
     }
 
     /**
+     * Deletes a comment from a record. Non-admin API users can only delete comments they have created. Enterprise Admins can delete any comment from a record.
+     *
      * @param string $baseId
      * @param string $tableIdOrName
      * @param string $recordId
      * @param string $rowCommentId
-     * @return CommentDeleteResponse
+     * @return DeleteResponse
      * @throws ErrorException
      * @throws ClientException
      */
-    public function delete(string $baseId, string $tableIdOrName, string $recordId, string $rowCommentId): CommentDeleteResponse
+    public function delete(string $baseId, string $tableIdOrName, string $recordId, string $rowCommentId): DeleteResponse
     {
         $url = $this->parser->url('/v0/:baseId/:tableIdOrName/:recordId/comments/:rowCommentId', [
             'baseId' => $baseId,
@@ -185,6 +250,8 @@ class CommentsTag extends TagAbstract
         ]);
 
         $options = [
+            'headers' => [
+            ],
             'query' => $this->parser->query([
             ], [
             ]),
@@ -192,30 +259,47 @@ class CommentsTag extends TagAbstract
 
         try {
             $response = $this->httpClient->request('DELETE', $url, $options);
-            $data = (string) $response->getBody();
+            $body = $response->getBody();
 
-            return $this->parser->parse($data, CommentDeleteResponse::class);
+            $data = $this->parser->parse((string) $body, DeleteResponse::class);
+
+            return $data;
         } catch (ClientException $e) {
             throw $e;
         } catch (BadResponseException $e) {
-            $data = (string) $e->getResponse()->getBody();
+            $body = $e->getResponse()->getBody();
+            $statusCode = $e->getResponse()->getStatusCode();
 
-            switch ($e->getResponse()->getStatusCode()) {
-                case 400:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 403:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 404:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 500:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                default:
-                    throw new UnknownStatusCodeException('The server returned an unknown status code');
+            if ($statusCode === 400) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
             }
+
+            if ($statusCode === 403) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            if ($statusCode === 404) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            if ($statusCode === 500) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            throw new UnknownStatusCodeException('The server returned an unknown status code: ' . $statusCode);
         } catch (\Throwable $e) {
             throw new ClientException('An unknown error occurred: ' . $e->getMessage());
         }
     }
+
 
 
 }

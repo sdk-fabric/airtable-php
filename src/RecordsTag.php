@@ -8,6 +8,7 @@ namespace SdkFabric\Airtable;
 
 use GuzzleHttp\Exception\BadResponseException;
 use Sdkgen\Client\Exception\ClientException;
+use Sdkgen\Client\Exception\Payload;
 use Sdkgen\Client\Exception\UnknownStatusCodeException;
 use Sdkgen\Client\TagAbstract;
 
@@ -42,6 +43,8 @@ class RecordsTag extends TagAbstract
         ]);
 
         $options = [
+            'headers' => [
+            ],
             'query' => $this->parser->query([
                 'timeZone' => $timeZone,
                 'userLocale' => $userLocale,
@@ -61,26 +64,42 @@ class RecordsTag extends TagAbstract
 
         try {
             $response = $this->httpClient->request('GET', $url, $options);
-            $data = (string) $response->getBody();
+            $body = $response->getBody();
 
-            return $this->parser->parse($data, RecordCollection::class);
+            $data = $this->parser->parse((string) $body, RecordCollection::class);
+
+            return $data;
         } catch (ClientException $e) {
             throw $e;
         } catch (BadResponseException $e) {
-            $data = (string) $e->getResponse()->getBody();
+            $body = $e->getResponse()->getBody();
+            $statusCode = $e->getResponse()->getStatusCode();
 
-            switch ($e->getResponse()->getStatusCode()) {
-                case 400:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 403:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 404:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 500:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                default:
-                    throw new UnknownStatusCodeException('The server returned an unknown status code');
+            if ($statusCode === 400) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
             }
+
+            if ($statusCode === 403) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            if ($statusCode === 404) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            if ($statusCode === 500) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            throw new UnknownStatusCodeException('The server returned an unknown status code: ' . $statusCode);
         } catch (\Throwable $e) {
             throw new ClientException('An unknown error occurred: ' . $e->getMessage());
         }
@@ -105,6 +124,8 @@ class RecordsTag extends TagAbstract
         ]);
 
         $options = [
+            'headers' => [
+            ],
             'query' => $this->parser->query([
             ], [
             ]),
@@ -112,26 +133,42 @@ class RecordsTag extends TagAbstract
 
         try {
             $response = $this->httpClient->request('GET', $url, $options);
-            $data = (string) $response->getBody();
+            $body = $response->getBody();
 
-            return $this->parser->parse($data, Record::class);
+            $data = $this->parser->parse((string) $body, Record::class);
+
+            return $data;
         } catch (ClientException $e) {
             throw $e;
         } catch (BadResponseException $e) {
-            $data = (string) $e->getResponse()->getBody();
+            $body = $e->getResponse()->getBody();
+            $statusCode = $e->getResponse()->getStatusCode();
 
-            switch ($e->getResponse()->getStatusCode()) {
-                case 400:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 403:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 404:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 500:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                default:
-                    throw new UnknownStatusCodeException('The server returned an unknown status code');
+            if ($statusCode === 400) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
             }
+
+            if ($statusCode === 403) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            if ($statusCode === 404) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            if ($statusCode === 500) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            throw new UnknownStatusCodeException('The server returned an unknown status code: ' . $statusCode);
         } catch (\Throwable $e) {
             throw new ClientException('An unknown error occurred: ' . $e->getMessage());
         }
@@ -155,34 +192,53 @@ class RecordsTag extends TagAbstract
         ]);
 
         $options = [
+            'headers' => [
+                'Content-Type' => 'application/json',
+            ],
             'query' => $this->parser->query([
             ], [
             ]),
-            'json' => $payload
+            'json' => $payload,
         ];
 
         try {
             $response = $this->httpClient->request('POST', $url, $options);
-            $data = (string) $response->getBody();
+            $body = $response->getBody();
 
-            return $this->parser->parse($data, RecordCollection::class);
+            $data = $this->parser->parse((string) $body, RecordCollection::class);
+
+            return $data;
         } catch (ClientException $e) {
             throw $e;
         } catch (BadResponseException $e) {
-            $data = (string) $e->getResponse()->getBody();
+            $body = $e->getResponse()->getBody();
+            $statusCode = $e->getResponse()->getStatusCode();
 
-            switch ($e->getResponse()->getStatusCode()) {
-                case 400:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 403:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 404:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 500:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                default:
-                    throw new UnknownStatusCodeException('The server returned an unknown status code');
+            if ($statusCode === 400) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
             }
+
+            if ($statusCode === 403) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            if ($statusCode === 404) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            if ($statusCode === 500) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            throw new UnknownStatusCodeException('The server returned an unknown status code: ' . $statusCode);
         } catch (\Throwable $e) {
             throw new ClientException('An unknown error occurred: ' . $e->getMessage());
         }
@@ -208,34 +264,53 @@ class RecordsTag extends TagAbstract
         ]);
 
         $options = [
+            'headers' => [
+                'Content-Type' => 'application/json',
+            ],
             'query' => $this->parser->query([
             ], [
             ]),
-            'json' => $payload
+            'json' => $payload,
         ];
 
         try {
             $response = $this->httpClient->request('PUT', $url, $options);
-            $data = (string) $response->getBody();
+            $body = $response->getBody();
 
-            return $this->parser->parse($data, Record::class);
+            $data = $this->parser->parse((string) $body, Record::class);
+
+            return $data;
         } catch (ClientException $e) {
             throw $e;
         } catch (BadResponseException $e) {
-            $data = (string) $e->getResponse()->getBody();
+            $body = $e->getResponse()->getBody();
+            $statusCode = $e->getResponse()->getStatusCode();
 
-            switch ($e->getResponse()->getStatusCode()) {
-                case 400:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 403:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 404:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 500:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                default:
-                    throw new UnknownStatusCodeException('The server returned an unknown status code');
+            if ($statusCode === 400) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
             }
+
+            if ($statusCode === 403) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            if ($statusCode === 404) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            if ($statusCode === 500) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            throw new UnknownStatusCodeException('The server returned an unknown status code: ' . $statusCode);
         } catch (\Throwable $e) {
             throw new ClientException('An unknown error occurred: ' . $e->getMessage());
         }
@@ -259,34 +334,53 @@ class RecordsTag extends TagAbstract
         ]);
 
         $options = [
+            'headers' => [
+                'Content-Type' => 'application/json',
+            ],
             'query' => $this->parser->query([
             ], [
             ]),
-            'json' => $payload
+            'json' => $payload,
         ];
 
         try {
             $response = $this->httpClient->request('PUT', $url, $options);
-            $data = (string) $response->getBody();
+            $body = $response->getBody();
 
-            return $this->parser->parse($data, BulkUpdateResponse::class);
+            $data = $this->parser->parse((string) $body, BulkUpdateResponse::class);
+
+            return $data;
         } catch (ClientException $e) {
             throw $e;
         } catch (BadResponseException $e) {
-            $data = (string) $e->getResponse()->getBody();
+            $body = $e->getResponse()->getBody();
+            $statusCode = $e->getResponse()->getStatusCode();
 
-            switch ($e->getResponse()->getStatusCode()) {
-                case 400:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 403:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 404:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 500:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                default:
-                    throw new UnknownStatusCodeException('The server returned an unknown status code');
+            if ($statusCode === 400) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
             }
+
+            if ($statusCode === 403) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            if ($statusCode === 404) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            if ($statusCode === 500) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            throw new UnknownStatusCodeException('The server returned an unknown status code: ' . $statusCode);
         } catch (\Throwable $e) {
             throw new ClientException('An unknown error occurred: ' . $e->getMessage());
         }
@@ -312,34 +406,53 @@ class RecordsTag extends TagAbstract
         ]);
 
         $options = [
+            'headers' => [
+                'Content-Type' => 'application/json',
+            ],
             'query' => $this->parser->query([
             ], [
             ]),
-            'json' => $payload
+            'json' => $payload,
         ];
 
         try {
             $response = $this->httpClient->request('PATCH', $url, $options);
-            $data = (string) $response->getBody();
+            $body = $response->getBody();
 
-            return $this->parser->parse($data, Record::class);
+            $data = $this->parser->parse((string) $body, Record::class);
+
+            return $data;
         } catch (ClientException $e) {
             throw $e;
         } catch (BadResponseException $e) {
-            $data = (string) $e->getResponse()->getBody();
+            $body = $e->getResponse()->getBody();
+            $statusCode = $e->getResponse()->getStatusCode();
 
-            switch ($e->getResponse()->getStatusCode()) {
-                case 400:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 403:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 404:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 500:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                default:
-                    throw new UnknownStatusCodeException('The server returned an unknown status code');
+            if ($statusCode === 400) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
             }
+
+            if ($statusCode === 403) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            if ($statusCode === 404) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            if ($statusCode === 500) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            throw new UnknownStatusCodeException('The server returned an unknown status code: ' . $statusCode);
         } catch (\Throwable $e) {
             throw new ClientException('An unknown error occurred: ' . $e->getMessage());
         }
@@ -363,38 +476,102 @@ class RecordsTag extends TagAbstract
         ]);
 
         $options = [
+            'headers' => [
+                'Content-Type' => 'application/json',
+            ],
             'query' => $this->parser->query([
             ], [
             ]),
-            'json' => $payload
+            'json' => $payload,
         ];
 
         try {
             $response = $this->httpClient->request('PATCH', $url, $options);
-            $data = (string) $response->getBody();
+            $body = $response->getBody();
 
-            return $this->parser->parse($data, BulkUpdateResponse::class);
+            $data = $this->parser->parse((string) $body, BulkUpdateResponse::class);
+
+            return $data;
         } catch (ClientException $e) {
             throw $e;
         } catch (BadResponseException $e) {
-            $data = (string) $e->getResponse()->getBody();
+            $body = $e->getResponse()->getBody();
+            $statusCode = $e->getResponse()->getStatusCode();
 
-            switch ($e->getResponse()->getStatusCode()) {
-                case 400:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 403:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 404:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                case 500:
-                    throw new ErrorException($this->parser->parse($data, Error::class));
-                default:
-                    throw new UnknownStatusCodeException('The server returned an unknown status code');
+            if ($statusCode === 400) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
             }
+
+            if ($statusCode === 403) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            if ($statusCode === 404) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            if ($statusCode === 500) {
+                $data = $this->parser->parse((string) $body, Error::class);
+
+                throw new ErrorException($data);
+            }
+
+            throw new UnknownStatusCodeException('The server returned an unknown status code: ' . $statusCode);
         } catch (\Throwable $e) {
             throw new ClientException('An unknown error occurred: ' . $e->getMessage());
         }
     }
+
+    /**
+     * Deletes a single record
+     *
+     * @param string $baseId
+     * @param string $tableIdOrName
+     * @param string $recordId
+     * @return DeleteResponse
+     * @throws ClientException
+     */
+    public function delete(string $baseId, string $tableIdOrName, string $recordId): DeleteResponse
+    {
+        $url = $this->parser->url('/v0/:baseId/:tableIdOrName/:recordId', [
+            'baseId' => $baseId,
+            'tableIdOrName' => $tableIdOrName,
+            'recordId' => $recordId,
+        ]);
+
+        $options = [
+            'headers' => [
+            ],
+            'query' => $this->parser->query([
+            ], [
+            ]),
+        ];
+
+        try {
+            $response = $this->httpClient->request('DELETE', $url, $options);
+            $body = $response->getBody();
+
+            $data = $this->parser->parse((string) $body, DeleteResponse::class);
+
+            return $data;
+        } catch (ClientException $e) {
+            throw $e;
+        } catch (BadResponseException $e) {
+            $body = $e->getResponse()->getBody();
+            $statusCode = $e->getResponse()->getStatusCode();
+
+            throw new UnknownStatusCodeException('The server returned an unknown status code: ' . $statusCode);
+        } catch (\Throwable $e) {
+            throw new ClientException('An unknown error occurred: ' . $e->getMessage());
+        }
+    }
+
 
 
 }
