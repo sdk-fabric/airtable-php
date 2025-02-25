@@ -11,6 +11,7 @@ use Sdkgen\Client\ClientAbstract;
 use Sdkgen\Client\Credentials;
 use Sdkgen\Client\CredentialsInterface;
 use Sdkgen\Client\Exception\ClientException;
+use Sdkgen\Client\Exception\Payload;
 use Sdkgen\Client\Exception\UnknownStatusCodeException;
 use Sdkgen\Client\TokenStoreInterface;
 
@@ -61,5 +62,10 @@ class Client extends ClientAbstract
     public static function build(string $token): self
     {
         return new self('https://api.airtable.com/', new Credentials\HttpBearer($token));
+    }
+
+    public static function buildAnonymous(): self
+    {
+        return new self('https://api.airtable.com/', new Credentials\Anonymous());
     }
 }
