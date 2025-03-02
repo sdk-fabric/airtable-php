@@ -21,47 +21,47 @@ class Field implements \JsonSerializable, \PSX\Record\RecordableInterface
     protected ?string $description = null;
     #[Description('')]
     protected ?FieldOptions $options = null;
-    public function setId(?string $id) : void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
-    public function getId() : ?string
+    public function getId(): ?string
     {
         return $this->id;
     }
-    public function setType(?string $type) : void
+    public function setType(?string $type): void
     {
         $this->type = $type;
     }
-    public function getType() : ?string
+    public function getType(): ?string
     {
         return $this->type;
     }
-    public function setName(?string $name) : void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
-    public function getName() : ?string
+    public function getName(): ?string
     {
         return $this->name;
     }
-    public function setDescription(?string $description) : void
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
-    public function getDescription() : ?string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
-    public function setOptions(?FieldOptions $options) : void
+    public function setOptions(?FieldOptions $options): void
     {
         $this->options = $options;
     }
-    public function getOptions() : ?FieldOptions
+    public function getOptions(): ?FieldOptions
     {
         return $this->options;
     }
-    public function toRecord() : \PSX\Record\RecordInterface
+    public function toRecord(): \PSX\Record\RecordInterface
     {
         /** @var \PSX\Record\Record<mixed> $record */
         $record = new \PSX\Record\Record();
@@ -72,7 +72,7 @@ class Field implements \JsonSerializable, \PSX\Record\RecordableInterface
         $record->put('options', $this->options);
         return $record;
     }
-    public function jsonSerialize() : object
+    public function jsonSerialize(): object
     {
         return (object) $this->toRecord()->getAll();
     }

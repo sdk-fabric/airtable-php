@@ -29,46 +29,46 @@ class BulkUpdateResponse implements \JsonSerializable, \PSX\Record\RecordableInt
     /**
      * @param array<string>|null $createdRecords
      */
-    public function setCreatedRecords(?array $createdRecords) : void
+    public function setCreatedRecords(?array $createdRecords): void
     {
         $this->createdRecords = $createdRecords;
     }
     /**
      * @return array<string>|null
      */
-    public function getCreatedRecords() : ?array
+    public function getCreatedRecords(): ?array
     {
         return $this->createdRecords;
     }
     /**
      * @param array<string>|null $updatedRecords
      */
-    public function setUpdatedRecords(?array $updatedRecords) : void
+    public function setUpdatedRecords(?array $updatedRecords): void
     {
         $this->updatedRecords = $updatedRecords;
     }
     /**
      * @return array<string>|null
      */
-    public function getUpdatedRecords() : ?array
+    public function getUpdatedRecords(): ?array
     {
         return $this->updatedRecords;
     }
     /**
      * @param array<Record>|null $records
      */
-    public function setRecords(?array $records) : void
+    public function setRecords(?array $records): void
     {
         $this->records = $records;
     }
     /**
      * @return array<Record>|null
      */
-    public function getRecords() : ?array
+    public function getRecords(): ?array
     {
         return $this->records;
     }
-    public function toRecord() : \PSX\Record\RecordInterface
+    public function toRecord(): \PSX\Record\RecordInterface
     {
         /** @var \PSX\Record\Record<mixed> $record */
         $record = new \PSX\Record\Record();
@@ -77,7 +77,7 @@ class BulkUpdateResponse implements \JsonSerializable, \PSX\Record\RecordableInt
         $record->put('records', $this->records);
         return $record;
     }
-    public function jsonSerialize() : object
+    public function jsonSerialize(): object
     {
         return (object) $this->toRecord()->getAll();
     }

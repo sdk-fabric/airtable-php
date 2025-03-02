@@ -43,7 +43,7 @@ class TablesTag extends TagAbstract
             $response = $this->httpClient->request('POST', $url, $options);
             $body = $response->getBody();
 
-            $data = $this->parser->parse((string) $body, Table::class);
+            $data = $this->parser->parse((string) $body, \PSX\Schema\SchemaSource::fromClass(Table::class));
 
             return $data;
         } catch (ClientException $e) {
@@ -52,26 +52,8 @@ class TablesTag extends TagAbstract
             $body = $e->getResponse()->getBody();
             $statusCode = $e->getResponse()->getStatusCode();
 
-            if ($statusCode === 400) {
-                $data = $this->parser->parse((string) $body, Error::class);
-
-                throw new ErrorException($data);
-            }
-
-            if ($statusCode === 403) {
-                $data = $this->parser->parse((string) $body, Error::class);
-
-                throw new ErrorException($data);
-            }
-
-            if ($statusCode === 404) {
-                $data = $this->parser->parse((string) $body, Error::class);
-
-                throw new ErrorException($data);
-            }
-
-            if ($statusCode === 500) {
-                $data = $this->parser->parse((string) $body, Error::class);
+            if ($statusCode >= 0 && $statusCode <= 999) {
+                $data = $this->parser->parse((string) $body, \PSX\Schema\SchemaSource::fromClass(Error::class));
 
                 throw new ErrorException($data);
             }
@@ -113,7 +95,7 @@ class TablesTag extends TagAbstract
             $response = $this->httpClient->request('PATCH', $url, $options);
             $body = $response->getBody();
 
-            $data = $this->parser->parse((string) $body, Table::class);
+            $data = $this->parser->parse((string) $body, \PSX\Schema\SchemaSource::fromClass(Table::class));
 
             return $data;
         } catch (ClientException $e) {
@@ -122,26 +104,8 @@ class TablesTag extends TagAbstract
             $body = $e->getResponse()->getBody();
             $statusCode = $e->getResponse()->getStatusCode();
 
-            if ($statusCode === 400) {
-                $data = $this->parser->parse((string) $body, Error::class);
-
-                throw new ErrorException($data);
-            }
-
-            if ($statusCode === 403) {
-                $data = $this->parser->parse((string) $body, Error::class);
-
-                throw new ErrorException($data);
-            }
-
-            if ($statusCode === 404) {
-                $data = $this->parser->parse((string) $body, Error::class);
-
-                throw new ErrorException($data);
-            }
-
-            if ($statusCode === 500) {
-                $data = $this->parser->parse((string) $body, Error::class);
+            if ($statusCode >= 0 && $statusCode <= 999) {
+                $data = $this->parser->parse((string) $body, \PSX\Schema\SchemaSource::fromClass(Error::class));
 
                 throw new ErrorException($data);
             }

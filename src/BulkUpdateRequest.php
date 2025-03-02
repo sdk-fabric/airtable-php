@@ -28,48 +28,48 @@ class BulkUpdateRequest implements \JsonSerializable, \PSX\Record\RecordableInte
     /**
      * @param array<string>|null $performUpsert
      */
-    public function setPerformUpsert(?array $performUpsert) : void
+    public function setPerformUpsert(?array $performUpsert): void
     {
         $this->performUpsert = $performUpsert;
     }
     /**
      * @return array<string>|null
      */
-    public function getPerformUpsert() : ?array
+    public function getPerformUpsert(): ?array
     {
         return $this->performUpsert;
     }
-    public function setReturnFieldsByFieldId(?bool $returnFieldsByFieldId) : void
+    public function setReturnFieldsByFieldId(?bool $returnFieldsByFieldId): void
     {
         $this->returnFieldsByFieldId = $returnFieldsByFieldId;
     }
-    public function getReturnFieldsByFieldId() : ?bool
+    public function getReturnFieldsByFieldId(): ?bool
     {
         return $this->returnFieldsByFieldId;
     }
-    public function setTypecast(?bool $typecast) : void
+    public function setTypecast(?bool $typecast): void
     {
         $this->typecast = $typecast;
     }
-    public function getTypecast() : ?bool
+    public function getTypecast(): ?bool
     {
         return $this->typecast;
     }
     /**
      * @param array<Record>|null $records
      */
-    public function setRecords(?array $records) : void
+    public function setRecords(?array $records): void
     {
         $this->records = $records;
     }
     /**
      * @return array<Record>|null
      */
-    public function getRecords() : ?array
+    public function getRecords(): ?array
     {
         return $this->records;
     }
-    public function toRecord() : \PSX\Record\RecordInterface
+    public function toRecord(): \PSX\Record\RecordInterface
     {
         /** @var \PSX\Record\Record<mixed> $record */
         $record = new \PSX\Record\Record();
@@ -79,7 +79,7 @@ class BulkUpdateRequest implements \JsonSerializable, \PSX\Record\RecordableInte
         $record->put('records', $this->records);
         return $record;
     }
-    public function jsonSerialize() : object
+    public function jsonSerialize(): object
     {
         return (object) $this->toRecord()->getAll();
     }

@@ -18,29 +18,29 @@ class CommentCollection implements \JsonSerializable, \PSX\Record\RecordableInte
      */
     #[Description('')]
     protected ?array $records = null;
-    public function setOffset(?string $offset) : void
+    public function setOffset(?string $offset): void
     {
         $this->offset = $offset;
     }
-    public function getOffset() : ?string
+    public function getOffset(): ?string
     {
         return $this->offset;
     }
     /**
      * @param array<Comment>|null $records
      */
-    public function setRecords(?array $records) : void
+    public function setRecords(?array $records): void
     {
         $this->records = $records;
     }
     /**
      * @return array<Comment>|null
      */
-    public function getRecords() : ?array
+    public function getRecords(): ?array
     {
         return $this->records;
     }
-    public function toRecord() : \PSX\Record\RecordInterface
+    public function toRecord(): \PSX\Record\RecordInterface
     {
         /** @var \PSX\Record\Record<mixed> $record */
         $record = new \PSX\Record\Record();
@@ -48,7 +48,7 @@ class CommentCollection implements \JsonSerializable, \PSX\Record\RecordableInte
         $record->put('records', $this->records);
         return $record;
     }
-    public function jsonSerialize() : object
+    public function jsonSerialize(): object
     {
         return (object) $this->toRecord()->getAll();
     }

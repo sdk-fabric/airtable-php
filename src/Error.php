@@ -13,22 +13,22 @@ class Error implements \JsonSerializable, \PSX\Record\RecordableInterface
 {
     #[Description('')]
     protected ?ErrorDetails $error = null;
-    public function setError(?ErrorDetails $error) : void
+    public function setError(?ErrorDetails $error): void
     {
         $this->error = $error;
     }
-    public function getError() : ?ErrorDetails
+    public function getError(): ?ErrorDetails
     {
         return $this->error;
     }
-    public function toRecord() : \PSX\Record\RecordInterface
+    public function toRecord(): \PSX\Record\RecordInterface
     {
         /** @var \PSX\Record\Record<mixed> $record */
         $record = new \PSX\Record\Record();
         $record->put('error', $this->error);
         return $record;
     }
-    public function jsonSerialize() : object
+    public function jsonSerialize(): object
     {
         return (object) $this->toRecord()->getAll();
     }

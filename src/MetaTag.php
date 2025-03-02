@@ -18,6 +18,7 @@ class MetaTag extends TagAbstract
      * Retrieve the user's ID. For OAuth access tokens, the scopes associated with the token used are also returned.
      *
      * @return User
+     * @throws ErrorException
      * @throws ClientException
      */
     public function getWhoami(): User
@@ -37,7 +38,7 @@ class MetaTag extends TagAbstract
             $response = $this->httpClient->request('GET', $url, $options);
             $body = $response->getBody();
 
-            $data = $this->parser->parse((string) $body, User::class);
+            $data = $this->parser->parse((string) $body, \PSX\Schema\SchemaSource::fromClass(User::class));
 
             return $data;
         } catch (ClientException $e) {
@@ -45,6 +46,12 @@ class MetaTag extends TagAbstract
         } catch (BadResponseException $e) {
             $body = $e->getResponse()->getBody();
             $statusCode = $e->getResponse()->getStatusCode();
+
+            if ($statusCode >= 0 && $statusCode <= 999) {
+                $data = $this->parser->parse((string) $body, \PSX\Schema\SchemaSource::fromClass(Error::class));
+
+                throw new ErrorException($data);
+            }
 
             throw new UnknownStatusCodeException('The server returned an unknown status code: ' . $statusCode);
         } catch (\Throwable $e) {

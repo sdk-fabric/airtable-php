@@ -20,31 +20,37 @@ class Record implements \JsonSerializable, \PSX\Record\RecordableInterface
      */
     #[Description('')]
     protected ?\PSX\Record\Record $fields = null;
-    public function setId(?string $id) : void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
-    public function getId() : ?string
+    public function getId(): ?string
     {
         return $this->id;
     }
-    public function setCreatedTime(?string $createdTime) : void
+    public function setCreatedTime(?string $createdTime): void
     {
         $this->createdTime = $createdTime;
     }
-    public function getCreatedTime() : ?string
+    public function getCreatedTime(): ?string
     {
         return $this->createdTime;
     }
-    public function setFields(?\PSX\Record\Record $fields) : void
+    /**
+     * @param \PSX\Record\Record<mixed>|null $fields
+     */
+    public function setFields(?\PSX\Record\Record $fields): void
     {
         $this->fields = $fields;
     }
-    public function getFields() : ?\PSX\Record\Record
+    /**
+     * @return \PSX\Record\Record<mixed>|null
+     */
+    public function getFields(): ?\PSX\Record\Record
     {
         return $this->fields;
     }
-    public function toRecord() : \PSX\Record\RecordInterface
+    public function toRecord(): \PSX\Record\RecordInterface
     {
         /** @var \PSX\Record\Record<mixed> $record */
         $record = new \PSX\Record\Record();
@@ -53,7 +59,7 @@ class Record implements \JsonSerializable, \PSX\Record\RecordableInterface
         $record->put('fields', $this->fields);
         return $record;
     }
-    public function jsonSerialize() : object
+    public function jsonSerialize(): object
     {
         return (object) $this->toRecord()->getAll();
     }

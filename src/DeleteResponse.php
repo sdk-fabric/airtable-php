@@ -15,23 +15,23 @@ class DeleteResponse implements \JsonSerializable, \PSX\Record\RecordableInterfa
     protected ?bool $deleted = null;
     #[Description('')]
     protected ?string $id = null;
-    public function setDeleted(?bool $deleted) : void
+    public function setDeleted(?bool $deleted): void
     {
         $this->deleted = $deleted;
     }
-    public function getDeleted() : ?bool
+    public function getDeleted(): ?bool
     {
         return $this->deleted;
     }
-    public function setId(?string $id) : void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
-    public function getId() : ?string
+    public function getId(): ?string
     {
         return $this->id;
     }
-    public function toRecord() : \PSX\Record\RecordInterface
+    public function toRecord(): \PSX\Record\RecordInterface
     {
         /** @var \PSX\Record\Record<mixed> $record */
         $record = new \PSX\Record\Record();
@@ -39,7 +39,7 @@ class DeleteResponse implements \JsonSerializable, \PSX\Record\RecordableInterfa
         $record->put('id', $this->id);
         return $record;
     }
-    public function jsonSerialize() : object
+    public function jsonSerialize(): object
     {
         return (object) $this->toRecord()->getAll();
     }

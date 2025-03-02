@@ -25,63 +25,63 @@ class Comment implements \JsonSerializable, \PSX\Record\RecordableInterface
     protected ?string $reactions = null;
     #[Description('')]
     protected ?CommentAuthor $author = null;
-    public function setId(?string $id) : void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
-    public function getId() : ?string
+    public function getId(): ?string
     {
         return $this->id;
     }
-    public function setCreatedTime(?string $createdTime) : void
+    public function setCreatedTime(?string $createdTime): void
     {
         $this->createdTime = $createdTime;
     }
-    public function getCreatedTime() : ?string
+    public function getCreatedTime(): ?string
     {
         return $this->createdTime;
     }
-    public function setLastUpdatedTime(?string $lastUpdatedTime) : void
+    public function setLastUpdatedTime(?string $lastUpdatedTime): void
     {
         $this->lastUpdatedTime = $lastUpdatedTime;
     }
-    public function getLastUpdatedTime() : ?string
+    public function getLastUpdatedTime(): ?string
     {
         return $this->lastUpdatedTime;
     }
-    public function setText(?string $text) : void
+    public function setText(?string $text): void
     {
         $this->text = $text;
     }
-    public function getText() : ?string
+    public function getText(): ?string
     {
         return $this->text;
     }
-    public function setParentCommentId(?string $parentCommentId) : void
+    public function setParentCommentId(?string $parentCommentId): void
     {
         $this->parentCommentId = $parentCommentId;
     }
-    public function getParentCommentId() : ?string
+    public function getParentCommentId(): ?string
     {
         return $this->parentCommentId;
     }
-    public function setReactions(?string $reactions) : void
+    public function setReactions(?string $reactions): void
     {
         $this->reactions = $reactions;
     }
-    public function getReactions() : ?string
+    public function getReactions(): ?string
     {
         return $this->reactions;
     }
-    public function setAuthor(?CommentAuthor $author) : void
+    public function setAuthor(?CommentAuthor $author): void
     {
         $this->author = $author;
     }
-    public function getAuthor() : ?CommentAuthor
+    public function getAuthor(): ?CommentAuthor
     {
         return $this->author;
     }
-    public function toRecord() : \PSX\Record\RecordInterface
+    public function toRecord(): \PSX\Record\RecordInterface
     {
         /** @var \PSX\Record\Record<mixed> $record */
         $record = new \PSX\Record\Record();
@@ -94,7 +94,7 @@ class Comment implements \JsonSerializable, \PSX\Record\RecordableInterface
         $record->put('author', $this->author);
         return $record;
     }
-    public function jsonSerialize() : object
+    public function jsonSerialize(): object
     {
         return (object) $this->toRecord()->getAll();
     }

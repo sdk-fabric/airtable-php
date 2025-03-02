@@ -15,23 +15,23 @@ class CommentReaction implements \JsonSerializable, \PSX\Record\RecordableInterf
     protected ?string $emoji = null;
     #[Description('')]
     protected ?CommentAuthor $reactingUser = null;
-    public function setEmoji(?string $emoji) : void
+    public function setEmoji(?string $emoji): void
     {
         $this->emoji = $emoji;
     }
-    public function getEmoji() : ?string
+    public function getEmoji(): ?string
     {
         return $this->emoji;
     }
-    public function setReactingUser(?CommentAuthor $reactingUser) : void
+    public function setReactingUser(?CommentAuthor $reactingUser): void
     {
         $this->reactingUser = $reactingUser;
     }
-    public function getReactingUser() : ?CommentAuthor
+    public function getReactingUser(): ?CommentAuthor
     {
         return $this->reactingUser;
     }
-    public function toRecord() : \PSX\Record\RecordInterface
+    public function toRecord(): \PSX\Record\RecordInterface
     {
         /** @var \PSX\Record\Record<mixed> $record */
         $record = new \PSX\Record\Record();
@@ -39,7 +39,7 @@ class CommentReaction implements \JsonSerializable, \PSX\Record\RecordableInterf
         $record->put('reactingUser', $this->reactingUser);
         return $record;
     }
-    public function jsonSerialize() : object
+    public function jsonSerialize(): object
     {
         return (object) $this->toRecord()->getAll();
     }

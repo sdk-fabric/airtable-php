@@ -15,23 +15,23 @@ class ErrorDetails implements \JsonSerializable, \PSX\Record\RecordableInterface
     protected ?string $type = null;
     #[Description('')]
     protected ?string $message = null;
-    public function setType(?string $type) : void
+    public function setType(?string $type): void
     {
         $this->type = $type;
     }
-    public function getType() : ?string
+    public function getType(): ?string
     {
         return $this->type;
     }
-    public function setMessage(?string $message) : void
+    public function setMessage(?string $message): void
     {
         $this->message = $message;
     }
-    public function getMessage() : ?string
+    public function getMessage(): ?string
     {
         return $this->message;
     }
-    public function toRecord() : \PSX\Record\RecordInterface
+    public function toRecord(): \PSX\Record\RecordInterface
     {
         /** @var \PSX\Record\Record<mixed> $record */
         $record = new \PSX\Record\Record();
@@ -39,7 +39,7 @@ class ErrorDetails implements \JsonSerializable, \PSX\Record\RecordableInterface
         $record->put('message', $this->message);
         return $record;
     }
-    public function jsonSerialize() : object
+    public function jsonSerialize(): object
     {
         return (object) $this->toRecord()->getAll();
     }
