@@ -2,7 +2,7 @@
   "typehub_user": "sdkfabric",
   "typehub_document": "airtable",
   "github_user": "sdk-fabric",
-  "github_repository": "airtable-csharp",
+  "github_repository": "airtable-php",
 
   "name": "sdkfabric/airtable",
   "description": "Airtable PHP SDK managed by SDK Fabric",
