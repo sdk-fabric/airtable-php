@@ -1,5 +1,5 @@
 
-# airtable-csharp
+# airtable-php
 
 This [SDK](https://github.com/sdk-fabric/airtable-php) is managed by the [SDK Fabric](https://sdk-fabric.org/) project, a global infrastructure to
 automatically generate SDKs for every API.
