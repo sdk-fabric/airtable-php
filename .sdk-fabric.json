@@ -1,0 +1,11 @@
+{
+  "typehub_user": "sdkfabric",
+  "typehub_document": "airtable",
+  "github_user": "sdk-fabric",
+  "github_repository": "airtable-csharp",
+
+  "name": "sdkfabric/airtable",
+  "description": "Airtable PHP SDK managed by SDK Fabric",
+  "namespace": "SdkFabric\\Airtable",
+  "website": "https://sdk-fabric.org"
+}
