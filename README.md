@@ -16,6 +16,54 @@ require __DIR__ . '/vendor/autoload.php';
 
 $client = new \SdkFabric\Airtable\Client::build('[access_token]');
 
-// @TODO use the client
+// Retrieve the user's ID.
+$response = $client->meta()->getwhoami();
 
+// List records in a table.
+$response = $client->records()->getall('baseId', 'tableIdOrName', 'timeZone', 'userLocale', 1, 1, 'offset', 'view', 'sort', 'filterByFormula', 'cellFormat', 'fields', true, 'recordMetadata');
+
+// Retrieve a single record.
+$response = $client->records()->get('baseId', 'tableIdOrName', 'recordId');
+
+// Creates multiple records.
+$response = $client->records()->create('baseId', 'tableIdOrName', new RecordCollection());
+
+// Updates a single record.
+$response = $client->records()->replace('baseId', 'tableIdOrName', 'recordId', new Record());
+
+// Updates up to 10 records, or upserts them when performUpsert is set.
+$response = $client->records()->replaceall('baseId', 'tableIdOrName', new BulkUpdateRequest());
+
+// Updates a single record.
+$response = $client->records()->update('baseId', 'tableIdOrName', 'recordId', new Record());
+
+// Updates up to 10 records, or upserts them when performUpsert is set.
+$response = $client->records()->updateall('baseId', 'tableIdOrName', new BulkUpdateRequest());
+
+// Deletes a single record.
+$response = $client->records()->delete('baseId', 'tableIdOrName', 'recordId');
+
+// Creates a new column and returns the schema for the newly created column.
+$response = $client->fields()->create('baseId', 'tableId', new Field());
+
+// Updates the name and/or description of a field.
+$response = $client->fields()->update('baseId', 'tableId', 'columnId', new Field());
+
+// Creates a new table and returns the schema for the newly created table.
+$response = $client->tables()->create('baseId', new Table());
+
+// Updates the name and/or description of a table.
+$response = $client->tables()->update('baseId', 'tableIdOrName', new Table());
+
+// Returns a list of comments for the record from newest to oldest.
+$response = $client->comments()->getall('baseId', 'tableIdOrName', 'recordId');
+
+// Creates a comment on a record.
+$response = $client->comments()->create('baseId', 'tableIdOrName', 'recordId', new Comment());
+
+// Updates a comment on a record.
+$response = $client->comments()->update('baseId', 'tableIdOrName', 'recordId', 'rowCommentId', new Comment());
+
+// Deletes a comment from a record.
+$response = $client->comments()->delete('baseId', 'tableIdOrName', 'recordId', 'rowCommentId');
 ```
