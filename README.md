@@ -17,28 +17,28 @@ require __DIR__ . '/vendor/autoload.php';
 $client = new \SdkFabric\Airtable\Client::build('[access_token]');
 
 // Retrieve the user's ID.
-$response = $client->meta()->getwhoami();
+$response = $client->meta()->getWhoami();
 
 // List records in a table.
-$response = $client->records()->getall('baseId', 'tableIdOrName', 'timeZone', 'userLocale', 1, 1, 'offset', 'view', 'sort', 'filterByFormula', 'cellFormat', 'fields', true, 'recordMetadata');
+$response = $client->records()->getAll('baseId', 'tableIdOrName', 'timeZone', 'userLocale', 1, 1, 'offset', 'view', 'sort', 'filterByFormula', 'cellFormat', 'fields', true, 'recordMetadata');
 
 // Retrieve a single record.
 $response = $client->records()->get('baseId', 'tableIdOrName', 'recordId');
 
 // Creates multiple records.
-$response = $client->records()->create('baseId', 'tableIdOrName', new RecordCollection());
+$response = $client->records()->create('baseId', 'tableIdOrName', new Record_Collection());
 
 // Updates a single record.
 $response = $client->records()->replace('baseId', 'tableIdOrName', 'recordId', new Record());
 
 // Updates up to 10 records, or upserts them when performUpsert is set.
-$response = $client->records()->replaceall('baseId', 'tableIdOrName', new BulkUpdateRequest());
+$response = $client->records()->replaceAll('baseId', 'tableIdOrName', new Bulk_Update_Request());
 
 // Updates a single record.
 $response = $client->records()->update('baseId', 'tableIdOrName', 'recordId', new Record());
 
 // Updates up to 10 records, or upserts them when performUpsert is set.
-$response = $client->records()->updateall('baseId', 'tableIdOrName', new BulkUpdateRequest());
+$response = $client->records()->updateAll('baseId', 'tableIdOrName', new Bulk_Update_Request());
 
 // Deletes a single record.
 $response = $client->records()->delete('baseId', 'tableIdOrName', 'recordId');
@@ -56,7 +56,7 @@ $response = $client->tables()->create('baseId', new Table());
 $response = $client->tables()->update('baseId', 'tableIdOrName', new Table());
 
 // Returns a list of comments for the record from newest to oldest.
-$response = $client->comments()->getall('baseId', 'tableIdOrName', 'recordId');
+$response = $client->comments()->getAll('baseId', 'tableIdOrName', 'recordId');
 
 // Creates a comment on a record.
 $response = $client->comments()->create('baseId', 'tableIdOrName', 'recordId', new Comment());
